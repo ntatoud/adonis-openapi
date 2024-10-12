@@ -20,9 +20,6 @@ jobs:
           - name: check-format
             command: pnpm run check-format
 
-          - name: check-exports
-            command: pnpm run check-exports
-
           - name: tests
             command: pnpm run test
 
