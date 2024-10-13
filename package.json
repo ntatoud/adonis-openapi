@@ -19,8 +19,8 @@
 	"main": "dist/index.js",
 	"exports": {
 		".": "./dist/index.js",
-		"./extensions": "./extensions/index.js",
-		"./routes": "./dist/routes/index.js"
+		"./extensions": "./dist/extensions/index.js",
+		"./handlers": "./dist/handlers/index.js"
 	},
 	"scripts": {
 		"prepare": "husky",
