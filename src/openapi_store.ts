@@ -1,9 +1,6 @@
 import { createStore } from 'zustand/vanilla';
+import type { OpenApiMeta } from './types/index.js';
 
-type OpenApiMeta = {
-	name: string;
-	method: string;
-};
 type OpenapiStore = {
 	meta: Record<string, OpenApiMeta>;
 };

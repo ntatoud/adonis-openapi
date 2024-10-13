@@ -3,7 +3,7 @@ import { configDefaults, defineConfig } from 'vitest/config';
 export default defineConfig({
 	test: {
 		coverage: {
-			exclude: [...configDefaults.coverage.exclude!, './src/index.ts'],
+			exclude: [...configDefaults.coverage.exclude!, './src/**/index.ts'],
 		},
 	},
 });
