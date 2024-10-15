@@ -1,5 +1,5 @@
 import { describe, expect, test } from 'vitest';
-import { addMeta, openapiStore } from '../openapi_store.js';
+import { openapiStore, storeOpenApiMeta } from '../features/openapi_store.js';
 
 describe('openapiStore', () => {
 	test('it should have initial state', () => {
@@ -18,7 +18,7 @@ describe('openapiStore', () => {
 			},
 		};
 
-		addMeta(metaToAdd.metaKey, metaToAdd.meta);
+		storeOpenApiMeta(metaToAdd.metaKey, metaToAdd.meta);
 
 		const { meta } = openapiStore.getState();
 
