@@ -1,7 +1,7 @@
 import type { Route, RouteResource } from '@adonisjs/core/http';
 import type { ResourceActionNames as ResourceActionName } from '@adonisjs/http-server/types';
-import { storeOpenApiMeta } from '#features/openapi_store';
-import type { OpenApiMeta } from '#types/index';
+import { storeOpenApiMeta } from '../../../features/openapi_store.js';
+import type { OpenApiMeta } from '../../../types/index.js';
 
 export type ResourceMetadata = Partial<Record<ResourceActionName, OpenApiMeta>>;
 type ResourceRouteName<ActionName extends ResourceActionName = ResourceActionName> =

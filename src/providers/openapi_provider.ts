@@ -1,6 +1,5 @@
 import type { ApplicationService } from '@adonisjs/core/types';
-import type { ResourceActionNames } from '@adonisjs/http-server/types';
-import type { ResourceMetadata } from '#extensions/adonis/routes/route_resource';
+import type { ResourceMetadata } from '../extensions/adonis/routes/route_resource.js';
 import type { OpenApiMeta } from '../types/index.js';
 
 /**
@@ -23,7 +22,7 @@ declare module '@adonisjs/core/http' {
 		openapi(meta: OpenApiMeta): this;
 	}
 
-	export interface RouteResource<ActionNames extends ResourceActionNames = ResourceActionNames> {
+	export interface RouteResource {
 		/**
 		 * Define the openapi metadata associated to actions of a route resource
 		 */
