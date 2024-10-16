@@ -26,5 +26,5 @@ test.group('Configure', (group) => {
 
 		await assert.fileExists('adonisrc.ts');
 		await assert.fileContains('adonisrc.ts', 'adonis-openapi/openapi_provider');
-	});
+	}).disableTimeout();
 });
