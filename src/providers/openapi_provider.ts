@@ -1,5 +1,7 @@
 import type { ApplicationService } from '@adonisjs/core/types';
+import type { ResourceActionNames } from '@adonisjs/http-server/types';
 import type { ResourceMetadata } from '../extensions/adonis/routes/route_resource.js';
+import OpenApiStore from '../features/openapi_store.js';
 import type { OpenApiMeta } from '../types/index.js';
 
 /**
@@ -22,13 +24,20 @@ declare module '@adonisjs/core/http' {
 		openapi(meta: OpenApiMeta): this;
 	}
 
-	export interface RouteResource {
+	export interface RouteResource<ActionNames extends ResourceActionNames = ResourceActionNames> {
 		/**
 		 * Define the openapi metadata associated to actions of a route resource
 		 */
-		openapi(resourceMetadata: ResourceMetadata): this;
+		openapi(resourceMetadata: ResourceMetadata<ActionNames>): this;
 	}
 }
+
+declare module '@adonisjs/core/types' {
+	export interface ContainerBindings {
+		'openapi.store': OpenApiStore;
+	}
+}
+
 /**
  * OpenAPI service provider
  */
@@ -38,21 +47,29 @@ export default class OpenapiServiceProvider {
 	/**
 	 * Register Route openapi macro
 	 */
-	protected async registerRoutesOpenapi() {
+	protected async registerRoutesOpenapi(openapiStore: OpenApiStore) {
 		const { defineRoutesOpenapi } = await import('../extensions/adonis/index.js');
 
-		await defineRoutesOpenapi();
+		await defineRoutesOpenapi(openapiStore);
 	}
 
 	/**
 	 * Invoked by AdonisJS to register container bindings
 	 */
-	register() {}
+	register() {
+		this.app.container.singleton(OpenApiStore, async () => {
+			return new OpenApiStore();
+		});
+
+		this.app.container.alias('openapi.store', OpenApiStore);
+	}
 
 	/**
 	 * Invoked by AdonisJS to extend the framework or pre-configure objects
 	 */
 	async boot() {
-		await this.registerRoutesOpenapi();
+		const openapiStore = await this.app.container.make('openapi.store');
+
+		await this.registerRoutesOpenapi(openapiStore);
 	}
 }

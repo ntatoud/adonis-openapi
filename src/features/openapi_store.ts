@@ -1,22 +1,31 @@
-import { createStore } from 'zustand/vanilla';
+import { type StoreApi, createStore } from 'zustand/vanilla';
 import type { OpenApiMeta } from '../types/index.js';
 
-type OpenApiStore = {
+type OpenApiStoreMeta = {
 	meta: Record<string, OpenApiMeta>;
 };
-
 /**
- * This is store where OpenAPI specific metadata will be saved
+ * This is the store where OpenAPI specific metadata will be saved
  */
-export const openapiStore = createStore<OpenApiStore>((set) => ({
-	meta: {},
-}));
+export default class OpenApiStore {
+	private store: StoreApi<OpenApiStoreMeta>;
 
-export const storeOpenApiMeta = (metaKey: string, meta: OpenApiMeta) => {
-	openapiStore.setState((state) => ({
-		meta: {
-			...state.meta,
-			[metaKey]: meta,
-		},
-	}));
-};
+	constructor() {
+		this.store = createStore((set) => ({
+			meta: {},
+		}));
+	}
+
+	public storeMetadata(metaKey: string, meta: OpenApiMeta): void {
+		this.store.setState((state) => ({
+			meta: {
+				...state.meta,
+				[metaKey]: meta,
+			},
+		}));
+	}
+
+	public getMetadata() {
+		return this.store.getState().meta;
+	}
+}

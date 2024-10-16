@@ -19,13 +19,12 @@
 		"module": "NodeNext",
 		"outDir": "dist",
 		"rootDir": ".",
-		"sourceMap": true,
+		"sourceMap": false,
 
 		/* AND if you're building for a library: */
 		"declaration": true,
 
 		/* AND if you're building for a library in a monorepo: */
-		"declarationMap": true
-	},
-	"include": ["./src", "./tests", "./bin"]
+		"declarationMap": false
+	}
 }

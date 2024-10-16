@@ -1,16 +1,16 @@
 import type { RouteJSON } from '@adonisjs/http-server/types';
-import { openapiStore } from '../features/openapi_store.js';
+import type OpenApiStore from '../features/openapi_store.js';
 import { getRouteHandlerName } from '../features/utils/helpers.js';
 import type { AdonisRoutes, OpenAPI } from '../types/index.js';
 
-export async function generate(adonisRoutes: AdonisRoutes) {
+export async function generate(adonisRoutes: AdonisRoutes, openapiStore: OpenApiStore) {
 	const routes = adonisRoutes.root;
 
 	if (!routes) {
 		return {};
 	}
 
-	const routeSchemas = await getRouteSchemas(routes);
+	const routeSchemas = await getRouteSchemas(routes, openapiStore);
 
 	const docs: OpenAPI.Document = {
 		openapi: '3.0.1',
@@ -28,6 +28,7 @@ export async function generate(adonisRoutes: AdonisRoutes) {
 
 async function getRouteSchemas(
 	routes: RouteJSON[],
+	openapiStore: OpenApiStore,
 ): Promise<Record<string, OpenAPI.PathItemObject>> {
 	const routesSchemas: Record<string, OpenAPI.PathItemObject> = {};
 
@@ -37,7 +38,7 @@ async function getRouteSchemas(
 
 		let schemaName: string | undefined = undefined;
 		if (metaKey) {
-			schemaName = openapiStore.getState().meta[metaKey]?.name;
+			schemaName = openapiStore.getMetadata()[metaKey]?.name;
 		}
 
 		routesSchemas[schemaName ?? route.pattern] = {

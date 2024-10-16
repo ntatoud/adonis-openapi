@@ -1,15 +1,17 @@
 import { test } from '@japa/runner';
-import { openapiStore, storeOpenApiMeta } from '../src/features/openapi_store.js';
+import OpenApiStore from '../src/features/openapi_store.js';
 
 test.group('OpenAPI Store', () => {
 	test('it should have initial state', async ({ assert }) => {
-		const { getInitialState } = openapiStore;
+		const openapiStore = new OpenApiStore();
 
-		const { meta: initialMeta } = getInitialState();
-		assert.deepEqual(initialMeta, {});
+		const intitialMetadata = openapiStore.getMetadata();
+		assert.deepEqual(intitialMetadata, {});
 	});
 
 	test('it should add value to the store', ({ assert }) => {
+		const openapiStore = new OpenApiStore();
+
 		const metaToAdd = {
 			metaKey: 'newMeta',
 			meta: {
@@ -18,10 +20,10 @@ test.group('OpenAPI Store', () => {
 			},
 		};
 
-		storeOpenApiMeta(metaToAdd.metaKey, metaToAdd.meta);
+		openapiStore.storeMetadata(metaToAdd.metaKey, metaToAdd.meta);
 
-		const { meta } = openapiStore.getState();
+		const metadata = openapiStore.getMetadata();
 
-		assert.deepEqual(meta, { [metaToAdd.metaKey]: metaToAdd.meta });
+		assert.deepEqual(metadata, { [metaToAdd.metaKey]: metaToAdd.meta });
 	});
 });

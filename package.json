@@ -16,24 +16,24 @@
 	"engines": {
 		"node": ">=20.6"
 	},
-	"main": "dist/index.js",
+	"main": "dist/src/index.js",
+	"files": ["./dist/src"],
 	"exports": {
-		".": "./dist/index.js",
-		"./openapi_provider": "./dist/providers/openapi_provider.js"
+		".": "./dist/src/index.js",
+		"./openapi_provider": "./dist/src/providers/openapi_provider.js"
 	},
 	"scripts": {
 		"prepare": "husky",
-		"dev": "vitest",
-		"quick:test": "node --import=./tsnode.esm.js --enable-source-maps bin/test.ts",
 		"build": "tsc",
 		"build:clean": "rm -rf ./dist && pnpm run build",
 		"format": "biome format --write ./",
 		"check-format": "biome check ./",
 		"check-exports": "attw --pack . --ignore-rules=cjs-resolves-to-esm",
+		"quick:test": "node --import=./tsnode.esm.js --enable-source-maps bin/test.ts",
+		"test": "c8 pnpm run quick:test",
 		"ci": "pnpm run build && pnpm run check-format && pnpm run test",
 		"local-release": "changeset version && changeset publish",
-		"prepublishOnly": "npm run ci",
-		"test": "c8 pnpm run quick:test"
+		"prepublishOnly": "npm run ci"
 	},
 	"type": "module",
 	"devDependencies": {
@@ -43,6 +43,7 @@
 		"@biomejs/biome": "1.9.3",
 		"@changesets/cli": "2.27.9",
 		"@japa/assert": "3.0.0",
+		"@japa/file-system": "2.3.0",
 		"@japa/runner": "3.1.4",
 		"@vitest/coverage-v8": "2.1.2",
 		"c8": "10.1.2",
@@ -59,8 +60,8 @@
 		"reporter": ["text", "html"],
 		"all": true,
 		"check-coverage": true,
-		"lines": 5,
-		"exclude": ["bin/test.ts", "tests/**", "tsnode.esm.js"],
-		"include": ["src/**"]
+		"lines": 60,
+		"include": ["src/**"],
+		"exclude": ["./src/**/index.ts", "./src/types/**"]
 	}
 }
