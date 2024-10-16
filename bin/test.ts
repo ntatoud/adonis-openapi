@@ -1,6 +1,12 @@
 import { assert } from '@japa/assert';
 import { fileSystem } from '@japa/file-system';
 import { configure, processCLIArgs, run } from '@japa/runner';
+
+/**
+ * Base URL for test app. This is ${rootDir}/tmp
+ */
+export const BASE_URL = new URL('../tmp/', import.meta.url);
+
 /*
 |--------------------------------------------------------------------------
 | Configure tests

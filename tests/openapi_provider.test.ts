@@ -2,8 +2,8 @@ import { test } from '@japa/runner';
 import OpenApiStore from '../src/features/openapi_store.js';
 import { createApp } from './test-utils/app.js';
 
-test.group('OpenAPI Provider', (group) => {
-	test('register openapi provider', async ({ assert, test }) => {
+test.group('OpenAPI Provider', () => {
+	test('register openapi provider', async ({ assert }) => {
 		const app = await createApp();
 		assert.instanceOf(await app.container.make('openapi.store'), OpenApiStore);
 	});

@@ -1,6 +1,12 @@
 import { IgnitorFactory } from '@adonisjs/core/factories';
+import { BASE_URL } from '../../bin/test.js';
 
-const BASE_URL = new URL('./', import.meta.url);
+const IMPORTER = (filePath: string) => {
+	if (filePath.startsWith('./') || filePath.startsWith('../')) {
+		return import(new URL(filePath, BASE_URL).href);
+	}
+	return import(filePath);
+};
 
 export const createApp = async () => {
 	const ignitor = new IgnitorFactory()
@@ -11,7 +17,7 @@ export const createApp = async () => {
 		})
 		.withCoreConfig()
 		.withCoreProviders()
-		.create(BASE_URL);
+		.create(BASE_URL, { importer: IMPORTER });
 
 	const app = ignitor.createApp('web');
 	await app.init();
