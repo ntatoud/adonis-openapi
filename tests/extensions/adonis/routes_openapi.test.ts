@@ -1,3 +1,4 @@
+import type { RouteJSON } from '@adonisjs/http-server/types';
 import { test } from '@japa/runner';
 import { createApp } from '../../test-utils/app.js';
 
@@ -44,6 +45,7 @@ test.group('Routes openapi macros', () => {
 		router.get('/', [RouteController, 'index']).openapi(openapiMetadata);
 		assert.deepEqual({ 'RouteController.index': openapiMetadata }, openapiStore.getMetadata());
 	});
+
 	test('RouteResource Macro', async ({ assert }) => {
 		const app = await createApp();
 		const openapiStore = await app.container.make('openapi.store');
@@ -74,5 +76,23 @@ test.group('Routes openapi macros', () => {
 			},
 			openapiStore.getMetadata(),
 		);
+	});
+
+	test('Router macro', async ({ assert }) => {
+		const app = await createApp();
+
+		const router = await app.container.make('router');
+
+		router.openapi('/docs');
+
+		router.commit();
+		const { root: routes } = router.toJSON() as { root: RouteJSON[] };
+
+		const patterns = routes.map((route) => route.pattern);
+
+		assert.lengthOf(routes, 2);
+
+		assert.equal(patterns[0], '/swagger');
+		assert.equal(patterns[1], '/docs');
 	});
 });
