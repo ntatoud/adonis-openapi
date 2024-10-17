@@ -7,7 +7,6 @@ export const routerOpenapi = (openapiStore: OpenApiStore) =>
 	function (this: Router, docsPath: string) {
 		// This is needed to expose the swagger specs to the documentation
 		this.get('/swagger', async () => {
-			console.log(openapiStore.getMetadata());
 			return await generate(this.toJSON(), openapiStore);
 		});
 		return this.get(docsPath, async () => {

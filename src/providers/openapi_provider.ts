@@ -21,7 +21,7 @@ declare module '@adonisjs/core/http' {
 		/**
 		 * Define the openapi metadata associated to a route
 		 */
-		openapi(meta: OpenApiMeta): this;
+		openapi(metadata: OpenApiMeta): this;
 	}
 
 	export interface RouteResource<ActionNames extends ResourceActionNames = ResourceActionNames> {

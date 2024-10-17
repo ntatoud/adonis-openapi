@@ -4,11 +4,12 @@ import type { OpenApiMeta } from '../types/index.js';
 type OpenApiStoreMeta = {
 	meta: Record<string, OpenApiMeta>;
 };
+
 /**
  * This is the store where OpenAPI specific metadata will be saved
  */
 export default class OpenApiStore {
-	private store: StoreApi<OpenApiStoreMeta>;
+	private readonly store: StoreApi<OpenApiStoreMeta>;
 
 	constructor() {
 		this.store = createStore((set) => ({

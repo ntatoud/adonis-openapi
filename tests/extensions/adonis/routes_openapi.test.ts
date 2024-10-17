@@ -37,6 +37,7 @@ test.group('Routes openapi macros', () => {
 		};
 
 		class RouteController {
+			// NOSONAR
 			async index() {}
 		}
 
