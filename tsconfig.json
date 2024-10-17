@@ -18,14 +18,13 @@
 		/* If transpiling with TypeScript: */
 		"module": "NodeNext",
 		"outDir": "dist",
-		"rootDir": "src",
-		"sourceMap": true,
+		"rootDir": ".",
+		"sourceMap": false,
 
 		/* AND if you're building for a library: */
 		"declaration": true,
 
 		/* AND if you're building for a library in a monorepo: */
-		"declarationMap": true
-	},
-	"include": ["./src"]
+		"declarationMap": false
+	}
 }

@@ -1,3 +1,1 @@
-export default function blank() {
-	return 'Hello world';
-}
+export { configure } from './configure.js';
